@@ -3372,7 +3372,10 @@ mod test {
         assert!(client.left_rooms().is_empty());
         assert!(!client.invited_rooms().is_empty());
 
-        assert!(client.get_invited_room(&room_id!("!696r7674:example.com")).is_some());
+        let room = client.get_invited_room(&room_id!("!696r7674:example.com"));
+        assert!(room.is_some());
+        assert_eq!(Some("My Room Name".to_string()), room.as_ref().unwrap().name());
+        assert_eq!("My Room Name", room.unwrap().display_name().await.unwrap());
     }
 
     #[tokio::test]
